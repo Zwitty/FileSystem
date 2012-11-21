@@ -59,10 +59,10 @@ sfs_getsize(char *pathname);
 int
 sfs_gettype(char *pathname);
 
-
+/*
 int
 sfs_initialize(int erase);
-
+*/
 
 
 /*****************************************************

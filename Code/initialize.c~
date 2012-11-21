@@ -38,12 +38,12 @@ int sfs_initialize(int erase){
 	{
 		return -1;
 	}
-	/*
+	
 	if(erase >= 1){
 		while(!eof("simdisk.data")){
 			put_block(0, NULL);
 		}
-	}*/
+	}
 	
 	//put_block(0, NULL);
 	return 0;

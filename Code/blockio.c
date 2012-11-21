@@ -9,7 +9,7 @@
 #include <unistd.h>
 #include <stdio.h>
 
-/* file for storing simulated disk's data */
+/* file  storing simulated disk's data */
 #define DISKFILE "simdisk.data"
 /* size of blocks on simulated disk */
 #define BLKSIZE  128
