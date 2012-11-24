@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include "sfstest.h"
 #include "blockio.h"
+#include "string.h"
 
 static int openfile;
 /*
@@ -23,19 +23,11 @@ return 1;
 }
 */
 int sfs_initialize(int erase){
-	/*folderblock root;
-	char temp[128];
-	printf("gg");
-	openfile = 0;*/
+	
 	char * superblock_0 = NULL;
 	char * superblock_1 = NULL;
-	char* inode[512];
-	//superblock_0 = (char*) calloc(128, sizeof(char));
-	/*memcpy(superblock_0, (char*)temp, sizeof(char));
-	memcpy(superblock_0, 'e', sizeof(char));
-	memcpy(superblock_0, 's', sizeof(char));
-	memcpy(superblock_0, 't', sizeof(char));*/
-	//superblock_0 = "superblock_0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0";
+	char* inodein[512];
+
 	superblock_0 = malloc(128);
 	strcpy(superblock_0, "superblock_0");
 	put_block(0, superblock_0);
@@ -45,45 +37,40 @@ int sfs_initialize(int erase){
 
 	superblock_1 = malloc(128);
 	strcpy(superblock_1, "superblock_0");
+	inodein[0] = malloc(128);
+	inodein[0] = NULL;
+	inodein[1] = malloc(128);
+	inodein[1] = NULL;
 	
-	//superblock_1 = "superblock_1\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0";
-	inode[0] = malloc(128);
-	inode[0] = NULL;
-	inode[1] = malloc(128);
-	inode[1] = NULL;
+	inodein[2] = malloc(128);
+	strcpy(inodein[2], "101/!");//first entry in inode
 	
-	inode[2] = malloc(128);
-	strcpy(inode[2], "100/!");
-	
-	inode[3] = malloc(128);
+	inodein[3] = malloc(128);
 	//strcpy(inode[3], "inode 3");
 
-	inode[4] = malloc(128);
+	inodein[4] = malloc(128);
 	//strcpy(inode[4], "inode 4");
 
-	inode[5] = malloc(128);
+	inodein[5] = malloc(128);
 	//strcpy(inode[5], "inode 5");
 
-	inode[6] = malloc(128);
+	inodein[6] = malloc(128);
 	//strcpy(inode[6], "inode 6");
 
-	inode[7] = malloc(128);
+	inodein[7] = malloc(128);
 	//strcpy(inode[7], "inode 7");
 
-	inode[8] = malloc(128);
+	inodein[8] = malloc(128);
 	//strcpy(inode[8], "inode 8");
 
-	inode[9] = malloc(128);
+	inodein[9] = malloc(128);
 	//strcpy(inode[9], "inode 9");
 
 
 
 	//root
-	inode[10] = malloc(128);
-	strcpy(inode[10], "0/");
-
-	
-	
+	inodein[10] = malloc(128);
+	strcpy(inodein[10], "1/");
 	
 	//char* buf = NULL;
 	//buf = (char*) calloc(10, sizeof(char));
@@ -107,7 +94,7 @@ int sfs_initialize(int erase){
 	if (put_block(100, superblock_0) != 0)
 	{
 		put_block(1, superblock_1);
-		put_block(2, inode[10]);
+		put_block(2, inodein[10]);
 		return -1;
 	}
 	
@@ -119,15 +106,16 @@ int sfs_initialize(int erase){
 		}else{	
 	//put_block(0, NULL);
 		put_block(1, superblock_1);
-		put_block(2, inode[2]);
-		put_block(3, inode[3]);
-		put_block(4, inode[4]);
-		put_block(5, inode[5]);
-		put_block(6, inode[6]);
-		put_block(7, inode[7]);
-		put_block(8, inode[8]);
-		put_block(9, inode[9]);
-		put_block(10, inode[10]);
-		return 0;
+		put_block(2, inodein[2]);
+		put_block(3, inodein[3]);
+		put_block(4, inodein[4]);
+		put_block(5, inodein[5]);
+		put_block(6, inodein[6]);
+		put_block(7, inodein[7]);
+		put_block(8, inodein[8]);
+		put_block(9, inodein[9]);
+		put_block(10, inodein[10]);
+		get_block(10, inodein[10]);
+		return 1;
 	}
 }
