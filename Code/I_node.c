@@ -34,14 +34,16 @@ int inodeSearch(char* path){
 
 	//inodeReadTable();
 	//inodeWriteTable();
+	
 	int i, j;
 	int index = -1;
 	char* temp, temp2;
+	char* A;
 	temp = malloc(128);//get info from get_block()
-	for (i=12; i<512; i++){
+	for (i=11; i<512; i++){
 
 		get_block(i, temp);
-
+		//puts(A);
 		if (temp[0] != '\0'){
 			for(j = 0; j<128; j++){
 				if(strncmp(temp, path, strlen(path)) == 0){

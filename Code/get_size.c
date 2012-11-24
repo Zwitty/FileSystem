@@ -2,5 +2,6 @@
 
 int
 sfs_getsize(char *pathname){
+	
 	return 0;
 }
