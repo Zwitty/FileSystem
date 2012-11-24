@@ -8,6 +8,7 @@ int sfs_create(char *pathname, int type){
 //	index = 11;
 	char* addToBlock;
 	addToBlock = malloc(128);
+
 	//strcpy(addToBlock, "added");
 	char* chartype = (char)(((int)'0')+type);
 	append(addToBlock, chartype);
@@ -16,5 +17,12 @@ int sfs_create(char *pathname, int type){
 		append(addToBlock, pathname[i]);
 	}
 	put_block(index, addToBlock);
+	if(type == 0){
+		//creates a block used to store data
+		char* dataBuf;
+		dataBuf = malloc(128);
+		append(dataBuf, '!');//the "!" denotes an empty reserved data block
+		put_block(index+1, dataBuf);
+	}
 	return 1;
 }

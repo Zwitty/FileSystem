@@ -1,7 +1,10 @@
 #include <stdio.h>
 
+
+//Checks the files descriptor in the simdisk.data block for the pathname.
 int
 sfs_gettype(char *pathname){
+	//checks to see if the path contains a file
 	char* path2;
 	path2 = malloc(128);
 	append(path2, '0');
@@ -9,12 +12,12 @@ sfs_gettype(char *pathname){
 	for(q =0; q <strlen(pathname); q++){
 		append(path2, pathname[q]);
 	}
-	int index = inodeSearch(path2);
+	int index = inodeSearch(path2);//returns the index of the block
 	if(index > 0){
-		return 0;
+		return 0;//returns 0 for path
 	}
 
-
+	//checks to see if the path contains a directory
 	char* path3;
 	path3 = malloc(128);
 	append(path3, '1');
@@ -24,15 +27,9 @@ sfs_gettype(char *pathname){
 	}
 	int index2 = inodeSearch(path3);
 		if(index2 > 0){
-		return 1;
+		return 1;//returns 1 for directory
 	}else{
-		return -1;
+		return -1;//returns -1 for undefined
 
 	}
-
-	/*char* buf;
-	buf = malloc(128);
-	get_block(index, buf);
-	char* fd;
-	fd = strtok(buf,"/");*/
 }

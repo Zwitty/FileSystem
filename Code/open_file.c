@@ -13,5 +13,6 @@ int sfs_open(char *pathname){
 	if(index < 0){
 		return index;
 	}
+	putSuperBlock(index);
 	return 0;
 }
