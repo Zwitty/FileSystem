@@ -8,6 +8,6 @@ int sfs_close(int fd){
 		put_block(0,buf);//rewrites superblock 0 with nothing.
 		return 1;
 	}else{
-		return fd;
+		return -1;
 	}
 }

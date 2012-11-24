@@ -22,14 +22,12 @@ int inodeSearch(char* path){
 
 		get_block(i, temp);
 		if (temp[0] != '\0'){
-			for(j = 0; j<128; j++){
-				if(strncmp(temp, path, strlen(path)) == 0){
-						index = i;
-						break;
-					}else{
-						continue;
-					}
-			}
+			if(strncmp(temp, path, strlen(path)) == 0){
+					index = i;
+					break;
+				}else{
+					continue;
+				}
 		}
 	}
 	return index;
