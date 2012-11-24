@@ -2,14 +2,16 @@
 #include "blockio.h"
 #include "string.h"
 
+//creates a file or directory
 int sfs_create(char *pathname, int type){
 	int index;
 	index = inodeAdd(type, pathname);
-//	index = 11;
+	if(index == -1){
+		return -1;
+	}
 	char* addToBlock;
 	addToBlock = malloc(128);
 
-	//strcpy(addToBlock, "added");
 	char* chartype = (char)(((int)'0')+type);
 	append(addToBlock, chartype);
 	int i;

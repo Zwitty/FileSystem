@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+//writes to the open file defined in the superblock.
+//writes to the reserved block in simdisk.data
 int sfs_write(int fd, int start, int length, char *mem_pointer){
 	if(fd != 0){
 		return -1;

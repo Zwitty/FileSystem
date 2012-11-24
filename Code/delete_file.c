@@ -2,6 +2,7 @@
 #include "blockio.h"
 #include "string.h"
 
+//overwrites the pathblock in simdisk.data, it first finds the index.
 int sfs_delete(char *pathname){
 	char* path2;
 	path2 = malloc(128);

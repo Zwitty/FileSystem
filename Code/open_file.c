@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-
+//finds the index of the pathname and adds the index to the superblock
 int sfs_open(char *pathname){
 	char* path2;
 	path2 = malloc(128);
