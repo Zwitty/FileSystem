@@ -11,15 +11,26 @@ int putSuperBlock(int FileLoc){
 	char* fileChar;
 	fileChar = malloc(128);
 	snprintf(fileChar, 127, "%d",FileLoc);
+	int i;
 
-	put_block(0, fileChar);
-	return 0;
+	char* temp;
+	temp = malloc(128);
+
+	for(i = 0; i< 4; i++){
+		get_block(i,temp);
+		if(temp[0] == '0'){
+			put_block(i, fileChar);	
+			return i;	
+		}
+	}
+
+	return -1;
 }
 //Gets the open files superblock_0
-int getSuperBlock(){
+int getSuperBlock(int fd){
 	char* buf;
 	buf = malloc(128);
-	get_block(0, buf);
+	get_block(fd-1, buf);
 	int openFile =atoi(buf);
 	return openFile;
 }
@@ -40,6 +51,6 @@ char* getDirSuperBlock(){
 	char* dir;
 	dir = malloc(128);
 	int i;
-	get_block(1, dir);
+	get_block(4, dir);
 	return dir;
 }

@@ -10,9 +10,22 @@ int sfs_create(char *pathname, int type){
 	{
 		return -1;
 	}
-
 	if(index == -1){
 		return -1;
+	}
+
+	int p;
+	int count = 0;
+	for(p=1; p<strlen(pathname);p++){
+		if(pathname[p] != '/'){
+			count = count + 1;
+		}
+		if(pathname[p] == '/'){
+			count = 0;
+		}
+		if(count > 6){	
+			return -1;
+		}
 	}
 	char* addToBlock;
 	addToBlock = malloc(128);

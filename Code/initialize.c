@@ -8,6 +8,9 @@ int sfs_initialize(int erase){
 	
 	char * superblock_0 = NULL;
 	char * superblock_1 = NULL;
+	char * superblock_2 = NULL;
+	char * superblock_3 = NULL;
+	char * superblock_4 = NULL;
 	char* inodein[512];
 
 	//defines super block
@@ -15,8 +18,14 @@ int sfs_initialize(int erase){
 	//initializes superblock with zero, effectivly closing it
 	strcpy(superblock_0, "0");
 	superblock_1 = malloc(128);
+	strcpy(superblock_1, "0");
+	superblock_2 = malloc(128);
+	strcpy(superblock_2, "0");
+	superblock_3 = malloc(128);
+	strcpy(superblock_3, "0");
+	superblock_4 = malloc(128);
 	//initializes superblock_1 with 1.
-	strcpy(superblock_1, "1/");
+	strcpy(superblock_4, "1/");
 
 	//defines room for inode table
 	inodein[0] = malloc(128);
@@ -24,10 +33,11 @@ int sfs_initialize(int erase){
 	inodein[1] = malloc(128);
 	inodein[1] = NULL;//superblock
 	inodein[2] = malloc(128);
-	strcpy(inodein[2], "101/!");//first entry in inode
+
 	inodein[3] = malloc(128);
 	inodein[4] = malloc(128);
 	inodein[5] = malloc(128);
+	strcpy(inodein[5], "101/!");//first entry in inode
 	inodein[6] = malloc(128);
 	inodein[7] = malloc(128);
 	inodein[8] = malloc(128);
@@ -50,9 +60,9 @@ int sfs_initialize(int erase){
 	}else{	
 		put_block(0, superblock_0);
 		put_block(1, superblock_1);
-		put_block(2, inodein[2]);
-		put_block(3, inodein[3]);
-		put_block(4, inodein[4]);
+		put_block(2, superblock_2);
+		put_block(3, superblock_3);
+		put_block(4, superblock_4);
 		put_block(5, inodein[5]);
 		put_block(6, inodein[6]);
 		put_block(7, inodein[7]);

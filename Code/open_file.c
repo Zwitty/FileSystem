@@ -16,7 +16,7 @@ int sfs_open(char *pathname){
 		return index;
 	}
 	if(type == 0){
-		putSuperBlock(index);
+		return putSuperBlock(index) + 1;
 	}
 	if(type == 1){
 		putDirSuperBlock(path2);
