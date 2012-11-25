@@ -55,7 +55,7 @@ int inodeAdd(int type, char* path){
 }
 
 //writes table into inode black
-int inodeWriteTable(){
+/*int inodeWriteTable(){
 	int i, j;
 	for(i=0; i<512; i++){
 		for(j=0; j< 128; j++){
@@ -71,7 +71,7 @@ int inodeWriteTable(){
 	put_block(8, inodeBlocks[6]);
 	put_block(9, inodeBlocks[7]);
 	return 0;
-}
+}*/
 
 //reades the inode table and stores data into inode array.
 int inodeReadTable(){

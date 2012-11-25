@@ -14,6 +14,7 @@ int sfs_read(int fd, int start, int length, char *mem_pointer){
 			get_block(index+1, buf);
 			int i;
 			int space = start+length;
+			//add formula check
 			for(i = start; i < space; i++){
 				mem_pointer[i-start] = buf[i];
 			}

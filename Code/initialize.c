@@ -16,7 +16,7 @@ int sfs_initialize(int erase){
 	strcpy(superblock_0, "0");
 	superblock_1 = malloc(128);
 	//initializes superblock_1 with 1.
-	strcpy(superblock_1, "1");
+	strcpy(superblock_1, "1/");
 
 	//defines room for inode table
 	inodein[0] = malloc(128);

@@ -6,6 +6,11 @@
 int sfs_create(char *pathname, int type){
 	int index;
 	index = inodeAdd(type, pathname);
+	if(pathname[0] != '/')
+	{
+		return -1;
+	}
+
 	if(index == -1){
 		return -1;
 	}
