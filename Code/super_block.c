@@ -43,7 +43,7 @@ int putDirSuperBlock(char* openDir){
 	for(i=0; i< strlen(openDir); i++){
 		append(buf, openDir[i]);
 	}
-	put_block(1, buf);
+	put_block(4, buf);
 	return 0;
 }
 //gets directory for superblock_1

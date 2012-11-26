@@ -27,6 +27,7 @@ int sfs_create(char *pathname, int type){
 			return -1;
 		}
 	}
+
 	char* addToBlock;
 	addToBlock = malloc(128);
 
