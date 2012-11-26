@@ -10,9 +10,9 @@ int sfs_write(int fd, int start, int length, char *mem_pointer){
 	if(index == -1){
 		return -1;
 	}
-	get_block(index+1, buf);
+	get_block(index+1, buf);//gets block
 	int i;
-	int space = start+length;
+	int space = start+length;//make sure we do not go over the 128 bytes allowed
 	for(i = start; i < space; i++){
 		buf[i] = mem_pointer[i-start];
 	}

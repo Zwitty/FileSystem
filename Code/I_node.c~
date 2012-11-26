@@ -1,45 +1,67 @@
 #include <stdio.h>
+#include "string.h"
 #include "blockio.h"
 
-static char* inode[512];
-char* inodeBlocks[7];
+char* inode[512];
+char* inodeBlocks[8];
+
+
+
 char buff[128];
-//inode = (char*) calloc(7, sizeof(char));
 
 
-int inodeSeach(char* path){
-	inodeReadTable();
-	char* temp;
-	int i;
-	for(i = 0; i < 512; i++){
-		int m = 0;
-		while(inode[i][m] != '!'){
-			strcat(temp, inode[i][m]);
+//Finds index of a specified path in simdisk.data
+int inodeSearch(char* path){
+
+	int i, j;
+	int index = -1;
+	char* temp, temp2;
+	char* A;
+	temp = malloc(128);//get info from get_block()
+	for (i=11; i<512; i++){
+
+		get_block(i, temp);
+		if (temp[0] != '\0'){
+			if(strncmp(temp, path, strlen(path)) == 0){
+					index = i;
+					break;
+				}else{
+					continue;
+				}
 		}
 	}
-	return 0;
+	return index;
 }
+
+//returns the index of an empty block in simdisk.data to put the block
 int inodeAdd(int type, char* path){
-	int index;
+	inodeReadTable();
 	int i;
-	char* temp;
+	int index = -1;
+	char* chartype = (char)type;
+	char* temp, temp2;
+	temp = malloc(128);
+	
 	for (i=11; i<512; i++){
-		char* temp;
 		get_block(i, temp);
 		if (temp[0] == '\0'){
 			index = i;
-			strcpy(inode[i], (const char*)index);
-			strcpy(inode[i], (const char*)type);
-			strcpy(inode[i], (const char*)path);
+			temp2 = (char)index;
+			inode[i] = temp2;
 			break;
 		}
 	}
 	return index;
 }
-int inodeRemove(char* info){
-	return 0;
-}
-int inodeWriteTable(){
+
+//writes table into inode black
+/*int inodeWriteTable(){
+	int i, j;
+	for(i=0; i<512; i++){
+		for(j=0; j< 128; j++){
+			append(inodeBlocks[0], inode[i][j]);
+		}
+	}
 	put_block(2, inodeBlocks[0]);
 	put_block(3, inodeBlocks[1]);
 	put_block(4, inodeBlocks[2]);
@@ -49,8 +71,18 @@ int inodeWriteTable(){
 	put_block(8, inodeBlocks[6]);
 	put_block(9, inodeBlocks[7]);
 	return 0;
-}
+}*/
+
+//reades the inode table and stores data into inode array.
 int inodeReadTable(){
+	inodeBlocks[0] = malloc(128);
+	inodeBlocks[1] = malloc(128);
+	inodeBlocks[2] = malloc(128);
+	inodeBlocks[3] = malloc(128);
+	inodeBlocks[4] = malloc(128);
+	inodeBlocks[5] = malloc(128);
+	inodeBlocks[6] = malloc(128);
+	inodeBlocks[7] = malloc(128);
 	get_block(2, inodeBlocks[0]);
 	get_block(3, inodeBlocks[1]);
 	get_block(4, inodeBlocks[2]);
@@ -59,19 +91,31 @@ int inodeReadTable(){
 	get_block(7, inodeBlocks[5]);
 	get_block(8, inodeBlocks[6]);
 	get_block(9, inodeBlocks[7]);
-	int j, k, i;
+	int j, k;
+	int i = 0;
 	char* temp;
-	
-	for (i = 0; i < 512; i++){
-		for (j = 0; j < 8; j++) {
-			for (k =0; k < 128; k++){
-				if(inodeBlocks[j][k] == '!'){
-				}else{
-					strcat(temp, inodeBlocks[j][k]);
+	temp = malloc(128);
+
+	int g;
+	for(g=0; g<512; g++){
+		inode[g] = malloc(20);
+	}
+
+
+	for (j = 0; j < 8; j++) {
+		for (k =0; k < 128; k++){
+			if(inodeBlocks[j][k] == '!'){
+				if(i < 512){
+					inode[i] = temp;
+					i = i + 1;
 				}
+			}else if(inodeBlocks[j][k] != '\0') {
+				append(temp, inodeBlocks[j][k]);
+			}else{
+				continue;
 			}
 		}
-		inode[i] = temp;
+	
 	}
 	return 0;
 }
